@@ -1,0 +1,76 @@
+package mikanelsonhw2;
+
+import java.util.Queue;
+import java.util.Stack;
+import java.util.LinkedList;
+
+public class MikaNelsonHW2 {
+
+    private static int[] spans(int[] stocks) {
+        int[] s = new int[stocks.length];
+        Stack a = new Stack();
+        for (int i = 0; i < stocks.length; i++) {
+            while (!a.isEmpty() && stocks[(int)a.peek()] <= stocks[i]) {
+                a.pop();
+            }
+            if (a.isEmpty()) {
+                s[i] = i + 1;
+            } else {
+                s[i] = i - (int) a.peek();
+            }
+            a.push(i);
+        }
+        return s;
+    } 
+    
+    private static Queue rotate(int[] toRotate) {
+        Queue<Integer> q = new LinkedList<>();
+        for (int i = 0; i < toRotate.length; i++) {
+            q.add(toRotate[i]);
+        }
+        int temp = q.remove();
+        
+        return q;
+    }
+    
+    private static int[] reverseStack(int[] reverse) {
+        Stack stack = new Stack();
+        int[] reversedList = new int[reverse.length];
+        for (int i = 0; i < reverse.length; i++) {
+            stack.push(reverse[i]);
+        }
+        for (int i = 0; i < reverse.length; i++) {
+            reversedList[i] = (int) stack.pop();
+        }
+        return reversedList;
+    }
+    
+    public static void main(String[] args) {
+        int[] numbers = {1, 2, 3, 4, 5};
+        
+        System.out.println("List to be reversed: ");
+        for (int i = 0; i < numbers.length; i++) {
+            System.out.print(numbers[i] + " ");
+        }
+        System.out.println();
+        System.out.println("Reversed List:");
+        
+        numbers = reverseStack(numbers);
+        for (int i = 0; i < numbers.length; i++) {
+            System.out.print(numbers[i] + " ");
+        }
+        System.out.println("");
+        
+        System.out.println("Spans for {60, 30, 40, 50, 20}: ");
+        int[] testStocks = {60, 30, 40, 50, 20};
+        int[] span = spans(testStocks);
+        for (int i = 0; i < span.length; i++) {
+            System.out.print(span[i] + " ");
+        }
+        
+        System.out.println("");
+        int[] toQueue = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        System.out.println("Queue: " + rotate(toQueue));
+    }
+    
+}
